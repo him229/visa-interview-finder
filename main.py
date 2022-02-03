@@ -3,6 +3,10 @@ from datetime import datetime
 import time
 import smtplib, ssl
 import os
+from dotenv import load_dotenv
+
+dotenv_path = os.environ.get('DOTENV_PATH')
+load_dotenv(dotenv_path, override=True)
 
 EMAIL_ADD = os.environ.get('EMAIL_ADD')
 EMAIL_PASS = os.environ.get('EMAIL_PASS')
@@ -13,8 +17,7 @@ PHONE_1 = os.environ.get('PHONE_1')
 PHONE_2 = os.environ.get('PHONE_2')
 
 print("all", all([EMAIL_ADD, EMAIL_PASS, CURRENT_DATE, COOKIE, URL, PHONE_1, PHONE_2]))
-print(EMAIL_ADD, COOKIE)
-
+print(EMAIL_ADD, COOKIE, URL)
 class Mail:
     def __init__(self):
         self.port = 465
