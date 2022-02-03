@@ -2,6 +2,7 @@ import requests
 from datetime import datetime
 import time
 import smtplib, ssl
+import os
 
 EMAIL_ADD = os.environ.get('EMAIL_ADD')
 EMAIL_PASS = os.environ.get('EMAIL_PASS')
@@ -84,6 +85,7 @@ print(response.status_code, response.json(), response)
 
 if response.status_code != 200:
     mail.send_text(phone_numbers, "FAILURE", f"Response code = {response.status_code}")
+    print(f"FAILURE = Status code {response.status_code}")
     exit()
 
 dates = sorted([datetime.strptime(date_["date"], '%Y-%m-%d') for date_ in resp_json])
@@ -92,4 +94,5 @@ if dates:
     earlier_dates = list(filter(lambda x: x <= current_date, dates))
     if earlier_dates:
         earlier_dates = [d.strftime('%m/%d/%Y') for d in earlier_dates]
+        print(f"SUCCESS = Dates - {earlier_dates}")
         mail.send_text(phone_numbers, "SUCCESS", f"Appointment is available on {earlier_dates}")
